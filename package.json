@@ -1,6 +1,6 @@
 {
   "name": "cgeo-wkb",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "WKB import/export for cgeo types",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -25,11 +25,11 @@
   ],
   "devDependencies": {
     "@types/node": "^8.0.29",
-    "cgeo-wkt": "0.0.1",
+    "cgeo-wkt": "~0.1.0",
     "typescript": "^2.5.3"
   },
   "dependencies": {
-    "cbin": "0.0.1",
-    "cgeo": "0.0.1"
+    "cbin": "~0.1.0",
+    "cgeo": "~0.1.0"
   }
 }
