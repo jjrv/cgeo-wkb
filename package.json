@@ -1,0 +1,35 @@
+{
+  "name": "cgeo-wkb",
+  "version": "0.0.1",
+  "description": "WKB import/export for cgeo types",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "tsc": "tsc",
+    "prepublish": "tsc -p src",
+    "test": "tsc -p test && node test/test.js"
+  },
+  "author": "Juha Järvi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charto/cgeo-wkb.git"
+  },
+  "bugs": {
+    "url": "https://github.com/charto/cgeo-wkb/issues"
+  },
+  "homepage": "https://github.com/charto/cgeo-wkb#readme",
+  "keywords": [
+    "gis",
+    "wkt"
+  ],
+  "devDependencies": {
+    "@types/node": "^8.0.29",
+    "cgeo-wkt": "0.0.1",
+    "typescript": "^2.5.3"
+  },
+  "dependencies": {
+    "cbin": "0.0.1",
+    "cgeo": "0.0.1"
+  }
+}
