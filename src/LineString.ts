@@ -2,19 +2,18 @@
 // Released under the MIT license, see LICENSE.
 
 import * as cgeo from 'cgeo';
-import { LineString as Super } from 'cgeo';
 import { Reader, Writer } from 'cbin';
 import { OptionsWKB } from './Geometry';
 
-@cgeo.mixin(Super)
-export class LineString extends cgeo.mix(Super) {
+@cgeo.mixin()
+export class LineString extends cgeo.LineString {
 
 	measureWKB() {
 		return(9 + this.posList.length * 8);
 	}
 
 	writeWKB(writer: Writer, options: OptionsWKB) {
-		super.writeWKB(writer, options, this.posList.length >> 1);
+		writer.u32(this.posList.length >> 1);
 
 		for(let coord of this.posList) writer.f64(coord);
 	}

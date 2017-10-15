@@ -2,12 +2,11 @@
 // Released under the MIT license, see LICENSE.
 
 import * as cgeo from 'cgeo';
-import { GeometryCollection as Super } from 'cgeo';
 import { Reader, Writer } from 'cbin';
 import { OptionsWKB } from './Geometry';
 
-@cgeo.mixin(Super)
-export class GeometryCollection<Member extends cgeo.Geometry = cgeo.Geometry> extends cgeo.mix(Super) {
+@cgeo.mixin()
+export class GeometryCollection<Member extends cgeo.Geometry = cgeo.Geometry> extends cgeo.GeometryCollection {
 
 	measureWKB() {
 		let size = 9;
@@ -26,10 +25,10 @@ export class GeometryCollection<Member extends cgeo.Geometry = cgeo.Geometry> ex
 			if(child) ++count;
 		}
 
-		super.writeWKB(writer, options, count);
+		writer.u32(count);
 
 		for(let child of this.childList) {
-			if(child) child.writeWKB(writer, options);
+			if(child) child.writeFullWKB(writer, options);
 		}
 	}
 

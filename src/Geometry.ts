@@ -21,18 +21,20 @@ export class Geometry {
 
 	readWKB(this: This, reader: Reader, options: OptionsWKB) {}
 
-	writeWKB(this: This, writer: Writer, options: OptionsWKB, count?: number) {
+	writeWKB(this: This, writer: Writer, options: OptionsWKB) {}
+
+	writeFullWKB(this: This, writer: Writer, options: OptionsWKB) {
 		writer.data[writer.pos++] = writer.endian;
 		writer.u32(this.kind);
 
-		if(count || count === 0) writer.u32(count);
+		this.writeWKB(writer, options);
 	}
 
 	toWKB(this: This, options = wkbDefaults) {
 		const writer = new Writer(new Uint8Array(this.measureWKB()));
 
 		writer.endian = options.endian;
-		this.writeWKB(writer, options);
+		this.writeFullWKB(writer, options);
 
 		return(writer.data);
 	}
