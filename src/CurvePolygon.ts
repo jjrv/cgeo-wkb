@@ -2,22 +2,21 @@
 // Released under the MIT license, see LICENSE.
 
 import * as cgeo from 'cgeo';
-import { Reader, Writer } from 'cbin';
-import { OptionsWKB } from './Geometry';
+import { State } from './Geometry';
 
 @cgeo.mixin()
 export class CurvePolygon extends cgeo.CurvePolygon {
 
-	measureWKB() {
-		return(cgeo.MultiCurve.prototype.measureWKB.call(this));
+	measureWKB(state: State) {
+		return(cgeo.MultiCurve.prototype.measureWKB.call(this, state));
 	}
 
-	writeWKB(writer: Writer, options: OptionsWKB) {
-		return(cgeo.MultiCurve.prototype.writeWKB.call(this, writer, options));
+	writeWKB(state: State) {
+		return(cgeo.MultiCurve.prototype.writeWKB.call(this, state));
 	}
 
-	readWKB(reader: Reader, options: OptionsWKB) {
-		return(cgeo.MultiCurve.prototype.readWKB.call(this, reader, options));
+	readWKB(state: State) {
+		return(cgeo.MultiCurve.prototype.readWKB.call(this, state));
 	}
 
 }

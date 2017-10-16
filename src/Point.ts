@@ -2,24 +2,48 @@
 // Released under the MIT license, see LICENSE.
 
 import * as cgeo from 'cgeo';
-import { Reader, Writer } from 'cbin';
-import { OptionsWKB } from './Geometry';
+import { State } from './Geometry';
 
 @cgeo.mixin()
 export class Point extends cgeo.Point {
 
-	measureWKB() {
-		return(21);
+	measureWKB(state: State) {
+		let size = 21;
+
+		if(state.hasZ) size += 8;
+		if(state.hasM) size += 8;
+
+		return(size);
 	}
 
-	writeWKB(writer: Writer, options: OptionsWKB) {
-		writer.f64(this.pos[0]);
-		writer.f64(this.pos[1]);
+	writeWKB(state: State) {
+		const writer = state.writer;
+
+		if(state.flipXY) {
+			writer.f64(this.y);
+			writer.f64(this.x);
+		} else {
+			writer.f64(this.x);
+			writer.f64(this.y);
+		}
+
+		if(state.hasZ) writer.f64(this.z || 0);
+		if(state.hasM) writer.f64(this.m || 0);
 	}
 
-	readWKB(reader: Reader, options: OptionsWKB) {
-		this.pos[0] = reader.f64();
-		this.pos[1] = reader.f64();
+	readWKB(state: State) {
+		const reader = state.reader;
+
+		if(state.flipXY) {
+			this.y = reader.f64();
+			this.x = reader.f64();
+		} else {
+			this.x = reader.f64();
+			this.y = reader.f64();
+		}
+
+		if(state.hasZ) this.z = reader.f64();
+		if(state.hasM) this.m = reader.f64();
 	}
 
 }

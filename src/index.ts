@@ -20,7 +20,6 @@ declare module 'cgeo/dist/Geometry' {
 	interface Geometry extends GeometryWKB {}
 
 	namespace Geometry {
-		export function readWKB(reader: Reader, options?: OptionsWKB): Geometry;
 		export function fromWKB(data: Uint8Array, options?: OptionsWKB): Geometry;
 	}
 

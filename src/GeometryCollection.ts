@@ -2,41 +2,40 @@
 // Released under the MIT license, see LICENSE.
 
 import * as cgeo from 'cgeo';
-import { Reader, Writer } from 'cbin';
-import { OptionsWKB } from './Geometry';
+import { State, Geometry } from './Geometry';
 
 @cgeo.mixin()
 export class GeometryCollection<Member extends cgeo.Geometry = cgeo.Geometry> extends cgeo.GeometryCollection {
 
-	measureWKB() {
+	measureWKB(state: State) {
 		let size = 9;
 
 		for(let child of this.childList) {
-			if(child) size += child.measureWKB();
+			if(child) size += child.measureWKB(state);
 		}
 
 		return(size);
 	}
 
-	writeWKB(writer: Writer, options: OptionsWKB) {
+	writeWKB(state: State) {
 		let count = 0;
 
 		for(let child of this.childList) {
 			if(child) ++count;
 		}
 
-		writer.u32(count);
+		state.writer.u32(count);
 
 		for(let child of this.childList) {
-			if(child) child.writeFullWKB(writer, options);
+			if(child) child.writeFullWKB(state);
 		}
 	}
 
-	readWKB(reader: Reader, options: OptionsWKB) {
-		const count = reader.u32();
+	readWKB(state: State) {
+		const count = state.reader.u32();
 
 		for(let num = 0; num < count; ++num) {
-			this.addChild(cgeo.Geometry.readWKB(reader, options) as Member);
+			this.addChild(Geometry.readWKB(state) as Member);
 		}
 	}
 
